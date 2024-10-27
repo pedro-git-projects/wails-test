@@ -7,16 +7,19 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export default function Navigation({ children }: LayoutProps) {
+  const location = useLocation();
+
   const navigation = [
-    { name: 'Create Investigator', href: '#', icon: PlusCircleIcon, current: true },
-    { name: 'Search Investigator', href: '#', icon: MagnifyingGlassIcon, current: false },
-    { name: 'Simulate Combat', href: '#', icon: BoltIcon, current: false },
+    { name: 'Create Investigator', href: '/', icon: PlusCircleIcon, current: true },
+    { name: 'Search Investigator', href: '/search', icon: MagnifyingGlassIcon, current: false },
+    { name: 'Simulate Combat', href: '/combat', icon: BoltIcon, current: false },
   ]
 
   function classNames(...classes: String[]) {
@@ -65,18 +68,18 @@ export default function Navigation({ children }: LayoutProps) {
                       <ul role="list" className="-mx-2 space-y-1">
                         {navigation.map((item) => (
                           <li key={item.name}>
-                            <a
-                              href={item.href}
+                            <Link
+                              to={item.href}
                               className={classNames(
-                                item.current
+                                location.pathname === item.href
                                   ? 'bg-cthulhu-deep text-cthulhu-highlight'
                                   : 'text-cthulhu-olive hover:bg-cthulhu-gray hover:text-cthulhu-light',
-                                'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                                'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                               )}
                             >
                               <item.icon aria-hidden="true" className="h-6 w-6 shrink-0 text-cthulhu-teal" />
                               {item.name}
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
@@ -107,18 +110,18 @@ export default function Navigation({ children }: LayoutProps) {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           className={classNames(
-                            item.current
+                            location.pathname === item.href
                               ? 'bg-cthulhu-deep text-cthulhu-highlight'
                               : 'text-cthulhu-olive hover:bg-cthulhu-gray hover:text-cthulhu-light',
-                            'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                            'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
                           )}
                         >
                           <item.icon aria-hidden="true" className="h-6 w-6 shrink-0 text-cthulhu-teal" />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -143,7 +146,6 @@ export default function Navigation({ children }: LayoutProps) {
             </div>
           </div>
         </main>
-
       </div>
     </>
   );
